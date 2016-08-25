@@ -1,27 +1,36 @@
 package za.co.yourinventory.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
  * Created by Rosie on 2016/08/12.
  */
 
-@Embeddable
+@Entity
 public class Address implements Serializable {
-    private String street, city, state;
+
+    @Id
+        @GeneratedValue(strategy = GenerationType.AUTO)
+        private Long address_id;
+    private int streetNumber;
+    private String street, city, suburb;
 
     @Column(name = "Zip_Code")
     private String zip;
+
+    @OneToOne(mappedBy = "address")
+    private Customers customer;
 
     public Address() {
     }
 
     public Address(Builder builder) {
+        this.address_id = builder.address_id;
+        this.streetNumber = builder.streetNumber;
+        this.suburb = builder.suburb;
         this.street = builder.street;
         this.city = builder.city;
-        this.state = builder.state;
         this.zip = builder.zip;
     }
 
@@ -37,14 +46,36 @@ public class Address implements Serializable {
         return zip;
     }
 
-    public String getState() {
-        return state;
+    public Long getAddress_id() {
+        return address_id;
+    }
+
+    public Customers getCustomer() {
+        return customer;
+    }
+
+    public int getStreetNumber() {
+        return streetNumber;
+    }
+
+    public String getSuburb() {
+        return suburb;
     }
 
     public static class Builder{
-        private String street, city, state;
+        private Long address_id;
+        private int streetNumber;
+        private String street, city, suburb;
         private String zip;
 
+        public Builder id(Long value){
+            this.address_id= value;
+            return this;
+        }
+        public Builder num(int value){
+            this.streetNumber = value;
+            return this;
+        }
         public Builder street(String value){
             this.street = value;
             return this;
@@ -53,8 +84,8 @@ public class Address implements Serializable {
             this.city = value;
             return this;
         }
-        public Builder state(String value){
-            this.state = value;
+        public Builder suburb(String value){
+            this.suburb = value;
             return this;
         }
         public Builder zip(String value){
@@ -63,9 +94,11 @@ public class Address implements Serializable {
         }
 
         public Builder copy (Address value){
+            this.address_id= value.address_id;
+            this.streetNumber = value.streetNumber;
             this.street = value.street;
             this.city = value.city;
-            this.state = value.state;
+            this.suburb = value.suburb;
             this.zip = value.zip;
             return this;
         }
@@ -78,9 +111,11 @@ public class Address implements Serializable {
     @Override
     public String toString() {
         return "Address{" +
-                "street='" + street + '\'' +
+                "address_id=" + address_id +
+                ", streetNumber=" + streetNumber +
+                ", street='" + street + '\'' +
                 ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
+                ", suburb='" + suburb + '\'' +
                 ", zip='" + zip + '\'' +
                 '}';
     }

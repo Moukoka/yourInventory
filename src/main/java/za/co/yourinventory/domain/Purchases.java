@@ -10,30 +10,50 @@ import java.util.Date;
 
 @Entity
 public class Purchases implements Serializable {
+
     private Date date;
     private double total;
+    private int quantity;
+    private boolean delivery;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long purchaseId;
+    private Long purchase_id;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id")
-    private Product product;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customerId")
+    @JoinColumn(name = "customer_id")
     private Customers customer;
+
+    @OneToOne(mappedBy = "deliveries")
+    private Deliveries deliver;
 
     public Purchases() {
     }
 
     public Purchases(Builder builder) {
-        this.purchaseId = builder.purchaseId;
+        this.purchase_id = builder.purchase_id;
         this.date = builder.date;
         this.total = builder.total;
-        this.product = builder.product;
         this.customer = builder.customer;
+        this.delivery = builder.delivery;
+        this.quantity = builder.quantity;
+
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public boolean isDelivery() {
+        return delivery;
+    }
+
+    public Long getPurchase_id() {
+        return purchase_id;
+    }
+
+    public Deliveries getDeliver() {
+        return deliver;
     }
 
     public Date getDate() {
@@ -44,47 +64,51 @@ public class Purchases implements Serializable {
         return total;
     }
 
-    public Product getProduct() {
-        return product;
-    }
-
     public Customers getCustomer() {
         return customer;
     }
 
     public static class Builder{
-        private Long purchaseId;
+        private Long purchase_id;
         private Date date;
         private double total;
-        private Product product;
         private Customers customer;
+        private int quantity;
+        private boolean delivery;
+        private Deliveries deliver;
 
         public Builder id(Long value){
-            this.purchaseId = value;
+            this.purchase_id = value;
             return this;
         }
         public Builder dte(Date value){
             this.date = value;
             return this;
         }
+        public Builder qty(int value){
+            this.quantity = value;
+            return this;
+        }
+        public Builder del(boolean value){
+            this.delivery = value;
+            return this;
+        }
         public Builder tot(double value){
             this.total = value;
             return this;
         }
-        public Builder prod(Product value){
-            this.product = value;
-            return this;
-        }
+
         public Builder customer(Customers value){
             this.customer =value;
             return this;
         }
 
         public Builder copy(Purchases value){
-            this.purchaseId = value.purchaseId;
+            this.purchase_id = value.purchase_id;
             this.date = value.date;
             this.total = value.total;
-            this.product = value.product;
+            this.quantity = value.quantity;
+            this.delivery = value.delivery;
             this.customer = value.customer;
             return this;
         }
@@ -99,13 +123,13 @@ public class Purchases implements Serializable {
 
         Purchases purchases = (Purchases) o;
 
-        return purchaseId.equals(purchases.purchaseId);
+        return purchase_id.equals(purchases.purchase_id);
 
     }
 
     @Override
     public int hashCode() {
-        return purchaseId.hashCode();
+        return purchase_id.hashCode();
     }
 
     @Override
@@ -113,8 +137,9 @@ public class Purchases implements Serializable {
         return "Purchases{" +
                 "date=" + date +
                 ", total=" + total +
-                ", purchaseId=" + purchaseId +
-                ", product=" + product +
+                ", quantity=" + quantity +
+                ", delivery=" + delivery +
+                ", purchase_id=" + purchase_id +
                 ", customer=" + customer +
                 '}';
     }

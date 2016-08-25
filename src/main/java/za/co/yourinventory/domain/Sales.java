@@ -13,15 +13,15 @@ import java.util.List;
 public class Sales implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long sale_id;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "vendor_id")
     private Vendors vendor;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "goodId")
-    private List<Goods> goodsList;
+    @JoinColumn(name = "sale_id")
+    private List goodsList;
 
     private int quantity;
     private float total;
@@ -31,7 +31,7 @@ public class Sales implements Serializable {
     }
 
     public Sales(Builder builder) {
-        this.id = builder.id;
+        this.sale_id = builder.sale_id;
         this.vendor = builder.vendor;
         this.goodsList = builder.goodsList;
         this.quantity = builder.quantity;
@@ -40,7 +40,7 @@ public class Sales implements Serializable {
     }
 
     public Long getId() {
-        return id;
+        return sale_id;
     }
 
     public Date getDate() {
@@ -55,7 +55,7 @@ public class Sales implements Serializable {
         return quantity;
     }
 
-    public List<Goods> getGoodsList() {
+    public List getGoodsList() {
         return goodsList;
     }
 
@@ -64,22 +64,22 @@ public class Sales implements Serializable {
     }
 
     public static class Builder{
-        private Long id;
+        private Long sale_id;
         private Vendors vendor;
-        private List<Goods> goodsList;
+        private List goodsList;
         private int quantity;
         private float total;
         private Date date;
 
         public Builder id(Long id){
-            this.id = id;
+            this.sale_id = id;
             return this;
         }
         public Builder vendor(Vendors value){
             this.vendor = value;
             return this;
         }
-        public Builder goods(List<Goods> value){
+        public Builder goods(List value){
             this.goodsList = value;
             return this;
         }
@@ -97,7 +97,7 @@ public class Sales implements Serializable {
         }
 
         public Builder copy(Sales value){
-            this.id = value.id;
+            this.sale_id = value.sale_id;
             this.vendor = value.vendor;
             this.goodsList = value.goodsList;
             this.quantity = value.quantity;
@@ -118,14 +118,14 @@ public class Sales implements Serializable {
 
         Sales sales = (Sales) o;
 
-        if (!id.equals(sales.id)) return false;
+        if (!sale_id.equals(sales.sale_id)) return false;
         return vendor.equals(sales.vendor);
 
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
+        int result = sale_id.hashCode();
         result = 31 * result + vendor.hashCode();
         return result;
     }
@@ -133,7 +133,7 @@ public class Sales implements Serializable {
     @Override
     public String toString() {
         return "Sales{" +
-                "id=" + id +
+                "id=" + sale_id +
                 ", vendor=" + vendor +
                 ", goodsList=" + goodsList +
                 ", quantity=" + quantity +

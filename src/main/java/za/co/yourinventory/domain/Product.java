@@ -10,14 +10,23 @@ import java.io.Serializable;
 @Entity
 public class Product implements Serializable{
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long product_id;
     private String name, description;
     private float price;
 
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cat_name")
+    @JoinColumn(name = "category_id")
     private Categories category;
+
+    @ManyToOne
+    @JoinColumn(name = "purchase_id")
+    private Purchases purchase;
+
+    public Purchases getPurchase() {
+        return purchase;
+    }
 
     public Product() {
     }
@@ -28,10 +37,10 @@ public class Product implements Serializable{
         this.description = builder.description;
         this.price = builder.price;
         this.category = builder.category;
+        this.purchase = builder.purchase;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     public Long getProduct_id() {
         return product_id;
     }
@@ -58,6 +67,7 @@ public class Product implements Serializable{
         private String name, description;
         private float price;
         private Categories category;
+        private Purchases purchase;
 
         public Builder prodId(Long id){
             this.product_id = id;
@@ -79,12 +89,18 @@ public class Product implements Serializable{
             this.category = cat;
             return this;
         }
+        public Builder purchase(Purchases value){
+            this.purchase = value;
+            return this;
+        }
+
         public Builder copy(Product value){
             this.product_id= value.product_id;
             this.name = value.name;
             this.description = value.description;
             this.price = value.price;
             this.category= value.category;
+            this.purchase = value.purchase;
             return this;
         }
 

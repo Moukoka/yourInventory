@@ -1,9 +1,6 @@
 package za.co.yourinventory.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -16,8 +13,12 @@ public class Goods implements Serializable {
     private Long goodId;
 
     private String name, description;
-    private float price;
-    private int quantity;
+    private float unit_price;
+
+
+    @ManyToOne
+    @JoinColumn(name = "sale_id")
+    private Sales sale;
 
     public Goods() {
     }
@@ -26,20 +27,20 @@ public class Goods implements Serializable {
         this.goodId = builder.goodId;
         this.name = builder.name;
         this.description = builder.description;
-        this.price = builder.price;
-        this.quantity = builder.quantity;
+        this.unit_price = builder.unit_price;
+        this.sale = builder.sale;
+    }
+
+    public Sales getSale() {
+        return sale;
     }
 
     public Long getGoodId() {
         return goodId;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
     public float getPrice() {
-        return price;
+        return unit_price;
     }
 
     public String getDescription() {
@@ -53,8 +54,8 @@ public class Goods implements Serializable {
     public static class Builder{
         private Long goodId;
         private String name, description;
-        private float price;
-        private int quantity;
+        private float unit_price;
+        private Sales sale;
 
         public Builder id(Long id){
             this.goodId = id;
@@ -69,11 +70,11 @@ public class Goods implements Serializable {
             return this;
         }
         public Builder price(float value){
-            this.price = value;
+            this.unit_price = value;
             return this;
         }
-        public Builder quant(int num){
-            this.quantity = num;
+        public Builder sale(Sales value){
+            this.sale = value;
             return this;
         }
 
@@ -81,8 +82,8 @@ public class Goods implements Serializable {
             this.goodId = value.goodId;
             this.name = value.name;
             this.description = value.description;
-            this.price = value.price;
-            this.quantity = value.quantity;
+            this.unit_price = value.unit_price;
+            this.sale = value.sale;
             return this;
         }
 
@@ -113,8 +114,8 @@ public class Goods implements Serializable {
                 "goodId=" + goodId +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", price=" + price +
-                ", quantity=" + quantity +
+                ", unit_price=" + unit_price +
+                ", sale=" + sale +
                 '}';
     }
 }

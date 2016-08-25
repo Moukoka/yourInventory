@@ -10,53 +10,32 @@ import java.util.List;
 
 @Entity
 public class Customers implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long customerId;
+   @Id
+@GeneratedValue(strategy = GenerationType.AUTO)
+private Long customer_id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customerId")
-    private Purchases purchase;
+@OneToOne(cascade = CascadeType.ALL)
+@JoinColumn(name = "address_id")
+private Address address;
 
-    private String name, surname;
-    private int age;
+private String name, surname;
 
-    @Embedded
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "cardNumber")
-    private BankingDetails bankingDetails;
+@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+@JoinColumn(name = "cardNumber")
+private BankingDetails bankingDetails;
 
-    @Embedded
-    @ManyToOne(cascade = CascadeType.ALL)
-    private List<Deliveries> delivery;
 
-    @Embedded
-    @OneToOne(cascade = CascadeType.ALL)
-    private Address address;
-
-    public Address getAddress() {
-        return address;
-    }
 
     public Customers() {
     }
 
     public Customers(Builder builder) {
-        this.customerId = builder.customerId;
+        this.customer_id = builder.customer_id;
         this.name = builder.name;
         this.surname = builder.surname;
         this.bankingDetails = builder.bankingDetails;
-        this.delivery = builder.delivery;
         this.address = builder.address;
 
-    }
-
-    public Long getCustomerId() {
-        return customerId;
-    }
-
-    public Purchases getPurchase() {
-        return purchase;
     }
 
     public String getName() {
@@ -67,71 +46,59 @@ public class Customers implements Serializable {
         return surname;
     }
 
-    public int getAge() {
-        return age;
-    }
-
     public BankingDetails getBankingDetails() {
         return bankingDetails;
     }
 
-    public List<Deliveries> getDelivery() {
-        return delivery;
+    public Long getCustomer_id() {
+        return customer_id;
+    }
+    public Address getAddress() {
+        return address;
     }
 
-    public static class Builder{
-        private Long customerId;
-        private Purchases purchase;
-        private String name, surname;
-        private int age;
-        private BankingDetails bankingDetails;
-        private List<Deliveries> delivery;
-        private Address address;
+public static class Builder{
+    private Long customer_id;
+    private Purchases purchase;
+    private String name, surname;
+    private BankingDetails bankingDetails;
+    private Address address;
 
 
-        public Builder id(Long value){
-            this.customerId = value;
-            return this;
-        }
-        public Builder name(String value){
-            this.name = value;
-            return this;
-        }
-        public Builder surname(String surname){
-            this.surname = surname;
-            return this;
-        }
-        public Builder age(int num){
-            this.age = num;
-            return this;
-        }
-        public Builder bank(BankingDetails value){
-            this.bankingDetails = value;
-            return this;
-        }
-        public Builder deliver(List<Deliveries> value){
-            this.delivery = value;
-            return this;
-        }
-        public Builder ad(Address value){
-            this.address = value;
-            return this;
-        }
-
-        public Builder copy(Customers value){
-            this.customerId = value.customerId;
-            this.name = value.name;
-            this.surname = value.surname;
-            this.age = value.age;
-            this.bankingDetails = value.bankingDetails;
-            this.delivery= value.delivery;
-            this.address = value.address;
-
-            return this;
-        }
-
-        public Customers build(){return new Customers(this);}
+    public Builder id(Long value){
+        this.customer_id = value;
+        return this;
     }
+    public Builder name(String value){
+        this.name = value;
+        return this;
+    }
+    public Builder surname(String surname){
+        this.surname = surname;
+        return this;
+    }
+    public Builder bank(BankingDetails value){
+        this.bankingDetails = value;
+        return this;
+    }
+
+    public Builder ad(Address value){
+        this.address = value;
+        return this;
+    }
+
+    public Builder copy(Customers value){
+        this.customer_id = value.customer_id;
+        this.name = value.name;
+        this.surname = value.surname;
+        this.bankingDetails = value.bankingDetails;
+        this.address = value.address;
+
+        return this;
+    }
+
+    public Customers build(){return new Customers(this);}
+}
 
     @Override
     public boolean equals(Object o) {
@@ -140,25 +107,23 @@ public class Customers implements Serializable {
 
         Customers customers = (Customers) o;
 
-        return customerId.equals(customers.customerId);
+        return customer_id.equals(customers.customer_id);
 
     }
 
     @Override
     public int hashCode() {
-        return customerId.hashCode();
+        return customer_id.hashCode();
     }
 
     @Override
     public String toString() {
         return "Customers{" +
-                "customerId=" + customerId +
-                ", purchase=" + purchase +
+                "customer_id=" + customer_id +
+                ", address=" + address +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", age=" + age +
                 ", bankingDetails=" + bankingDetails +
-                ", delivery=" + delivery +
                 '}';
     }
 }

@@ -16,7 +16,8 @@ public class Vendors implements Serializable {
     private String telephone;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Sales> sales;
+     @JoinColumn(name = "vendor_id")
+        private List sales;
 
     public Vendors() {
     }

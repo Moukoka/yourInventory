@@ -8,22 +8,26 @@ import java.util.Date;
  * Created by Rosie on 2016/08/12.
  */
 
-@Embeddable
+@Entity
 public class Deliveries implements Serializable {
+    @Id
+        @GeneratedValue(strategy = GenerationType.AUTO)
+            private Long delivery_id;
     private Date date;
     private String status;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "customerId")
-    private Customers customer;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "purchase_id")
+    private Purchases purchase;
 
     public Deliveries() {
     }
 
     public Deliveries(Builder builder) {
+        this.delivery_id = builder.delivery_id;
         this.date = builder.date;
-        this.customer = builder.customer;
         this.status = builder.status;
+        this.purchase = builder.purchase;
     }
 
     public Date getDate() {
@@ -34,15 +38,28 @@ public class Deliveries implements Serializable {
         return status;
     }
 
-    public Customers getCustomer() {
-        return customer;
+    public Long getDelivery_id() {
+        return delivery_id;
+    }
+
+    public Purchases getPurchase() {
+        return purchase;
     }
 
     public static class Builder{
+        private Long delivery_id;
         private Date date;
         private String status;
-        private Customers customer;
+        private Purchases purchase;
 
+        public Builder id(Long value){
+            this.delivery_id = value;
+            return this;
+        }
+        public Builder purchase(Purchases value){
+            this.purchase = value;
+            return this;
+        }
         public Builder theDate(Date value){
             this.date = value;
             return this;
@@ -51,15 +68,13 @@ public class Deliveries implements Serializable {
             this.status = value;
             return this;
         }
-        public Builder customer(Customers value){
-            this.customer = value;
-            return this;
-        }
+
 
         public Builder copy(Deliveries value){
+            this.delivery_id= value.delivery_id;
             this.date = value.date;
-            this.customer = value.customer;
             this.status = value.status;
+            this.purchase = value.purchase;
             return this;
         }
 
@@ -72,9 +87,10 @@ public class Deliveries implements Serializable {
     @Override
     public String toString() {
         return "Deliveries{" +
-                "date=" + date +
+                "delivery_id=" + delivery_id +
+                ", date=" + date +
                 ", status='" + status + '\'' +
-                ", customer=" + customer +
+                ", purchase=" + purchase +
                 '}';
     }
 }
