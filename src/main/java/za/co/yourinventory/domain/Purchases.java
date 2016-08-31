@@ -24,7 +24,8 @@ public class Purchases implements Serializable {
     @JoinColumn(name = "customer_id")
     private Customers customer;
 
-    @OneToOne(mappedBy = "deliveries")
+    @OneToOne (cascade = CascadeType.ALL)/*(mappedBy = "deliveries")*/
+    @JoinColumn(name = "delivery_id")
     private Deliveries deliver;
 
     public Purchases() {

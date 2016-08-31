@@ -19,7 +19,7 @@ public class Categories implements Serializable{
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
-    private List products;
+    private List<Product> products;
 
     public Categories(Builder builder) {
         this.category_id = builder.category_id;
@@ -32,7 +32,7 @@ public class Categories implements Serializable{
         return category_id;
     }
 
-    public List getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
@@ -46,7 +46,7 @@ public class Categories implements Serializable{
     public  static class Builder{
         private Long category_id;
         private String category_name;
-        private List products;
+        private List<Product> products;
 
         public Builder id(Long value){
             this.category_id = value;
@@ -57,7 +57,7 @@ public class Categories implements Serializable{
             return this;
         }
 
-        public Builder prod(List value){
+        public Builder prod(List<Product> value){
             this.products =  value;
             return this;
         }

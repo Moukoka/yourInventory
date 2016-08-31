@@ -11,7 +11,7 @@ public class GoodsFactoryTest extends TestCase {
 
     public void testCreateGoods() throws Exception {
 
-        Goods good = GoodsFactory.createGoods("Nescafe");
+        Goods good = GoodsFactory.createGoods("Nescafe","Coffee",2);
         Assert.assertEquals("Nescafe", good.getName());
     }
 }

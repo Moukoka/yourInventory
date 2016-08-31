@@ -10,7 +10,7 @@ import za.co.yourinventory.domain.Vendors;
 public class VendorFactoryTest extends TestCase {
 
     public void testCreateVendor() throws Exception {
-        Vendors vendor = VendorFactory.createVendor("0213456789");
+        Vendors vendor = VendorFactory.createVendor("comos","sara","scomos@g.com","0112345678");
         Assert.assertEquals("0213456789", vendor.getTelephone());
 
     }

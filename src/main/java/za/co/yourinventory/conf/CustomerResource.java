@@ -1,5 +1,5 @@
 package za.co.yourinventory.conf;
-
+/*
 import org.springframework.hateoas.ResourceSupport;
 import za.co.yourinventory.domain.Address;
 import za.co.yourinventory.domain.BankingDetails;
@@ -10,6 +10,7 @@ import javax.persistence.*;
 /**
  * Created by Rosie on 2016/08/25.
  */
+/*
 public class CustomerResource extends ResourceSupport {
 
     private Long res_id;
@@ -93,3 +94,4 @@ public class CustomerResource extends ResourceSupport {
 
 
 }
+*/

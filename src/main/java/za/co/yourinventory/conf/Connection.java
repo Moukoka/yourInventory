@@ -19,7 +19,7 @@ import java.util.Map;
 /**
  * Created by Rosie on 2016/08/23.
  */
-@Configuration
+//@Configuration
 //@ComponentScan("za.co.yourinventory")
 //@EnableTransactionManagement
 //@EnableJpaRepositories(basePackages = "za.co.yourinventory.repositories")

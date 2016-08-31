@@ -31,6 +31,10 @@ public class Goods implements Serializable {
         this.sale = builder.sale;
     }
 
+    public void setUnit_price(float unit_price) {
+        this.unit_price = unit_price;
+    }
+
     public Sales getSale() {
         return sale;
     }

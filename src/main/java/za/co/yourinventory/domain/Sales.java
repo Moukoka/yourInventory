@@ -21,7 +21,7 @@ public class Sales implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "sale_id")
-    private List goodsList;
+    private List <Goods> goodsList;
 
     private int quantity;
     private float total;
@@ -37,6 +37,10 @@ public class Sales implements Serializable {
         this.quantity = builder.quantity;
         this.total = builder.total;
         this.date = builder.date;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public Long getId() {
@@ -55,7 +59,7 @@ public class Sales implements Serializable {
         return quantity;
     }
 
-    public List getGoodsList() {
+    public List<Goods> getGoodsList() {
         return goodsList;
     }
 
@@ -66,7 +70,7 @@ public class Sales implements Serializable {
     public static class Builder{
         private Long sale_id;
         private Vendors vendor;
-        private List goodsList;
+        private List<Goods> goodsList;
         private int quantity;
         private float total;
         private Date date;
@@ -79,7 +83,7 @@ public class Sales implements Serializable {
             this.vendor = value;
             return this;
         }
-        public Builder goods(List value){
+        public Builder goods(List<Goods> value){
             this.goodsList = value;
             return this;
         }

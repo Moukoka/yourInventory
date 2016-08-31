@@ -17,7 +17,7 @@ public class Vendors implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL)
      @JoinColumn(name = "vendor_id")
-        private List sales;
+        private List<Sales> sales;
 
     public Vendors() {
     }
@@ -53,6 +53,10 @@ public class Vendors implements Serializable {
 
     public String getCompanyName() {
         return companyName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public static class Builder{
