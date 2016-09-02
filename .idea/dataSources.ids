@@ -7,8 +7,115 @@
     </database-info>
     <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
     <schema name="" catalog="mydb"/>
+    <table name="address" schema="" catalog="mydb" type="TABLE">
+      <column name="address_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="city" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="street" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="street_number" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="suburb" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="zip_code" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="address_id"/>
+      <exported-key name="FK_8ty10pw947q1idxbhrm6sw3yr" table="customers" schema="" catalog="mydb" columns="address_id"/>
+    </table>
+    <table name="banking_details" schema="" catalog="mydb" type="TABLE">
+      <column name="bank_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="bank_name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="card_number" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="expiry_date" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="security_code" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="bank_id"/>
+      <exported-key name="FK_sjhqw6r8jq417rewvp9h1e80" table="customers" schema="" catalog="mydb" columns="card_number"/>
+    </table>
+    <table name="categories" schema="" catalog="mydb" type="TABLE">
+      <column name="category_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="category_name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="category_id"/>
+      <exported-key name="FK_rlaghtegr0yx2c1q1s6nkqjlh" table="product" schema="" catalog="mydb" columns="category_id"/>
+    </table>
+    <table name="customers" schema="" catalog="mydb" type="TABLE">
+      <column name="customer_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="surname" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="address_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="card_number" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <primary-key name="PRIMARY" columns="customer_id"/>
+      <foreign-key name="FK_8ty10pw947q1idxbhrm6sw3yr" columns="address_id" ref-table="address" ref-schema="" ref-catalog="mydb" ref-columns="address_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="FK_sjhqw6r8jq417rewvp9h1e80" columns="card_number" ref-table="banking_details" ref-schema="" ref-catalog="mydb" ref-columns="bank_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="FK_5yjt0gv76l0jk611h3kdmeby2" table="purchases" schema="" catalog="mydb" columns="customer_id"/>
+      <index name="FK_8ty10pw947q1idxbhrm6sw3yr" unique="false" columns="address_id"/>
+      <index name="FK_sjhqw6r8jq417rewvp9h1e80" unique="false" columns="card_number"/>
+    </table>
+    <table name="deliveries" schema="" catalog="mydb" type="TABLE">
+      <column name="delivery_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="date" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="status" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="purchase_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <primary-key name="PRIMARY" columns="delivery_id"/>
+      <foreign-key name="FK_m9xeioxhb9p3dh3cv2cg24am8" columns="purchase_id" ref-table="purchases" ref-schema="" ref-catalog="mydb" ref-columns="purchase_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="FK_jfx30oseh0b3up5e4a9gx8atj" table="purchases" schema="" catalog="mydb" columns="delivery_id"/>
+      <index name="FK_m9xeioxhb9p3dh3cv2cg24am8" unique="false" columns="purchase_id"/>
+    </table>
     <table name="essai" schema="" catalog="mydb" type="TABLE">
       <column name="mad" sqlType="VARCHAR" precision="10" scale="0" nullable="false" jdbcType="12"/>
+    </table>
+    <table name="goods" schema="" catalog="mydb" type="TABLE">
+      <column name="good_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="description" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="unit_price" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="sale_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <primary-key name="PRIMARY" columns="good_id"/>
+      <foreign-key name="FK_2oxm1a7n95i7d0pcv5y03vudb" columns="sale_id" ref-table="sales" ref-schema="" ref-catalog="mydb" ref-columns="sale_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="FK_2oxm1a7n95i7d0pcv5y03vudb" unique="false" columns="sale_id"/>
+    </table>
+    <table name="product" schema="" catalog="mydb" type="TABLE">
+      <column name="product_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="description" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="price" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="category_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="purchase_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <primary-key name="PRIMARY" columns="product_id"/>
+      <foreign-key name="FK_e5rfcdt5ijqt9wcw9m7cnx0kf" columns="purchase_id" ref-table="purchases" ref-schema="" ref-catalog="mydb" ref-columns="purchase_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="FK_rlaghtegr0yx2c1q1s6nkqjlh" columns="category_id" ref-table="categories" ref-schema="" ref-catalog="mydb" ref-columns="category_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="FK_e5rfcdt5ijqt9wcw9m7cnx0kf" unique="false" columns="purchase_id"/>
+      <index name="FK_rlaghtegr0yx2c1q1s6nkqjlh" unique="false" columns="category_id"/>
+    </table>
+    <table name="purchases" schema="" catalog="mydb" type="TABLE">
+      <column name="purchase_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="date" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="delivery" sqlType="BIT" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="quantity" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="total" sqlType="DOUBLE" precision="22" scale="0" nullable="false" jdbcType="8"/>
+      <column name="customer_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="delivery_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <primary-key name="PRIMARY" columns="purchase_id"/>
+      <foreign-key name="FK_5yjt0gv76l0jk611h3kdmeby2" columns="customer_id" ref-table="customers" ref-schema="" ref-catalog="mydb" ref-columns="customer_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="FK_jfx30oseh0b3up5e4a9gx8atj" columns="delivery_id" ref-table="deliveries" ref-schema="" ref-catalog="mydb" ref-columns="delivery_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="FK_m9xeioxhb9p3dh3cv2cg24am8" table="deliveries" schema="" catalog="mydb" columns="purchase_id"/>
+      <exported-key name="FK_e5rfcdt5ijqt9wcw9m7cnx0kf" table="product" schema="" catalog="mydb" columns="purchase_id"/>
+      <index name="FK_5yjt0gv76l0jk611h3kdmeby2" unique="false" columns="customer_id"/>
+      <index name="FK_jfx30oseh0b3up5e4a9gx8atj" unique="false" columns="delivery_id"/>
+    </table>
+    <table name="sales" schema="" catalog="mydb" type="TABLE">
+      <column name="sale_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="date" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="quantity" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="total" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="vendor_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <primary-key name="PRIMARY" columns="sale_id"/>
+      <foreign-key name="FK_9wy9tvdp4vpi5sgawlmkkpl6o" columns="vendor_id" ref-table="vendors" ref-schema="" ref-catalog="mydb" ref-columns="vendor_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="FK_2oxm1a7n95i7d0pcv5y03vudb" table="goods" schema="" catalog="mydb" columns="sale_id"/>
+      <index name="FK_9wy9tvdp4vpi5sgawlmkkpl6o" unique="false" columns="vendor_id"/>
+    </table>
+    <table name="vendors" schema="" catalog="mydb" type="TABLE">
+      <column name="vendor_id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="company_name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="contact_name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="telephone" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="vendor_id"/>
+      <exported-key name="FK_9wy9tvdp4vpi5sgawlmkkpl6o" table="sales" schema="" catalog="mydb" columns="vendor_id"/>
     </table>
   </data-source>
   <data-source name="Derby -" uuid="cbe758ee-cb16-4ec5-9964-a559e63dc607">

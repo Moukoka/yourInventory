@@ -11,7 +11,7 @@ public class Homepage {
 
 
     @RestController
-    @RequestMapping("/api/**")
+    @RequestMapping("/Homepage/**")
     public class HomePage {
         @Autowired
         @RequestMapping(value = "home",method = RequestMethod.GET)
